@@ -18,8 +18,8 @@ export const createFeedback = new Elysia({
       data: {
         id: feedbackId,
         reviewer: feedbackObject.reviewer,
+        date: new Date(),
         reviewed: feedbackObject.reviewed,
-        date: feedbackObject.date,
         questions: feedbackObject.questions,
       },
     });
@@ -32,7 +32,6 @@ export const createFeedback = new Elysia({
       feedback: t.Object({
         reviewer: t.String({ minLength: 1 }),
         reviewed: t.String({ minLength: 1 }),
-        date: t.String(),
         id: t.String(),
         questions: t.Array(
           t.Object({
