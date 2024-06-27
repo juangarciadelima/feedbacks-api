@@ -9,6 +9,7 @@ import { getAddedFeedbacks } from "@/routes/get-added-feedbacks.ts";
 import { getReceivedFeedbacks } from "@/routes/get-received-feedbacks.ts";
 import { saveUser } from "@/routes/save-user.ts";
 import { createQuestion } from "@/routes/create-question.ts";
+import { cors } from "@elysiajs/cors";
 
 const port = process.env.PORT || 3333;
 
@@ -25,6 +26,7 @@ export const app = new Elysia({ prefix: "/api" })
       },
     })
   )
+  .use(cors())
   .use(getFeedbacks)
   .use(getParticipants)
   .use(getQuestion)
