@@ -1,0 +1,25 @@
+{
+  "name": "feedbacks-api",
+  "module": "index.ts",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/http/server.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^20.12.12",
+    "prisma": "^5.14.0",
+    "tsx": "^4.10.5",
+    "typescript": "^5.4.5"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@elysiajs/swagger": "^1.0.5",
+    "@fastify/autoload": "^5.8.3",
+    "@prisma/client": "5.14.0",
+    "elysia": "^1.0.22",
+    "zod": "^3.23.8"
+  }
+}

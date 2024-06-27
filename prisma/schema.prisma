@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum QuestionType {
+  OBSERVATION
+  RATING
+}
+
+enum UserType {
+  PARTICIPANT
+  ADMIN
+}
+
+type Question {
+  questionName  String
+  rating        Int
+  justification String?
+}
+
+type QuestionsRatings {
+  id          String   @default(cuid()) @map("_id")
+  question    Question
+  observation String
+}
+
+model Feedbacks {
+  id        String             @id @default(cuid()) @map("_id")
+  reviewed  String
+  reviewer  String
+  date      DateTime
+  questions QuestionsRatings[]
+}
+
+model Participants {
+  id       String   @id @default(cuid()) @map("_id")
+  name     String
+  email    String
+  userType UserType
+}
+
+model QuestionsSet {
+  id              String      @id @default(cuid()) @map("_id")
+  questionSetName String
+  questions       Questions[]
+  numberOfStars   Int
+}
+
+type Questions {
+  id                  String       @default(cuid()) @map("_id")
+  questionName        String
+  questionDescription String
+  questionType        QuestionType
+}
