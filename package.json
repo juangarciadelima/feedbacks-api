@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun --watch src/http/server.ts",
-    "build": "bun build src/http/server.ts"
+    "build": "prisma generate && bun build src/http/server.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",
