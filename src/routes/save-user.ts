@@ -9,7 +9,7 @@ export const saveUser = new Elysia({
     description: "Save a user in the system",
   },
 }).post(
-  "/feedback",
+  "/user",
   async ({ body, set }) => {
     const { user: userObject } = body;
 

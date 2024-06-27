@@ -7,7 +7,7 @@ export const getReceivedFeedbacks = new Elysia({
     description: "Get received feedbacks by user",
   },
 }).get(
-  "/list-feedbacks/added",
+  "/list-feedbacks/received",
   async ({ query, set }) => {
     const { participantName, limit } = query;
 

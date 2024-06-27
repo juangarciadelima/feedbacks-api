@@ -9,6 +9,8 @@ import { getAddedFeedbacks } from "@/routes/get-added-feedbacks.ts";
 import { getReceivedFeedbacks } from "@/routes/get-received-feedbacks.ts";
 import { saveUser } from "@/routes/save-user.ts";
 
+const port = process.env.PORT || 3333;
+
 export const app = new Elysia({ prefix: "/api" })
   .use(
     swagger({
@@ -26,11 +28,11 @@ export const app = new Elysia({ prefix: "/api" })
   .use(getParticipants)
   .use(getQuestion)
   .use(getQuestions)
-  .use(createFeedback)
   .use(getAddedFeedbacks)
   .use(getReceivedFeedbacks)
   .use(saveUser)
-  .listen(3333);
+  .use(createFeedback)
+  .listen(port);
 
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
