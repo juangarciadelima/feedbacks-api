@@ -25,7 +25,7 @@ export const createFeedback = new Elysia({
     });
 
     set.status = 200;
-    return { message: "Feedback created successfully" };
+    return { message: "Feedback criado com sucesso" };
   },
   {
     body: t.Object({
@@ -38,9 +38,9 @@ export const createFeedback = new Elysia({
             question: t.Object({
               questionName: t.String(),
               rating: t.Number({ minimum: 1 }),
+              observation: t.Union([t.String({ minLength: 1 }), t.Null()]),
               justification: t.Optional(t.String({ minLength: 1 })),
             }),
-            observation: t.String(),
           })
         ),
       }),
