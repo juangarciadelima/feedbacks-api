@@ -21,7 +21,7 @@ export const getReceivedFeedbacks = new Elysia({
 
     if (!feedbacks.length) {
       set.status = 400;
-      return { message: "No feedbacks found for that user" };
+      return { message: "Feedbacks não foram encontrados para este usuário" };
     }
 
     set.status = 200;

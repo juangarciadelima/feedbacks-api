@@ -26,12 +26,12 @@ export const getFeedbacks = new Elysia({
 
     if (!feedbacks.length) {
       set.status = 400;
-      return { message: "No feedbacks found for that user" };
+      return { message: "Não foram encontradas avaliações" };
     }
 
     if (participant?.userType !== "ADMIN") {
       set.status = 403;
-      return { message: "You are not authorized to view feedbacks" };
+      return { message: "Você não tem autorização para acessar este endpoint" };
     }
 
     set.status = 200;

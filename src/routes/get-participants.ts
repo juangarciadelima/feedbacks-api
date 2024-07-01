@@ -11,7 +11,7 @@ export const getParticipants = new Elysia({
 
   if (!participants.length) {
     set.status = 400;
-    return { message: "No participants found" };
+    return { message: "Não há participantes" };
   }
 
   set.status = 200;

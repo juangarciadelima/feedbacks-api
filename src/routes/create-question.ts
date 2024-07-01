@@ -13,17 +13,22 @@ export const createQuestion = new Elysia({
   async ({ body, set }) => {
     const { questionSet: questionSetObject } = body;
 
-    await prisma.questionsSet.create({
-      data: {
-        numberOfStars: questionSetObject.numberOfStars,
-        id: randomUUID(),
-        questionSetName: questionSetObject.questionSetName,
-        questions: questionSetObject.questions,
-      },
-    });
+    try {
+      await prisma.questionsSet.create({
+        data: {
+          numberOfStars: questionSetObject.numberOfStars,
+          id: randomUUID(),
+          questionSetName: questionSetObject.questionSetName,
+          questions: questionSetObject.questions,
+        },
+      });
+    } catch (error) {
+      set.status = 400;
+      return { message: "Erro ao criar método de avaliação" };
+    }
 
     set.status = 200;
-    return { message: "Feedback created successfully" };
+    return { message: "Método de avaliação criado com sucesso" };
   },
   {
     body: t.Object({

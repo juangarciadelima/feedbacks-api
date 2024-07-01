@@ -25,7 +25,7 @@ export const saveUser = new Elysia({
     });
 
     set.status = 200;
-    return { message: "User saved successfully" };
+    return { message: "Usuário salvo com sucesso" };
   },
   {
     body: t.Object({
@@ -33,10 +33,10 @@ export const saveUser = new Elysia({
         email: t.String({
           minLength: 1,
           format: "email",
-          error: "Invalid Email",
+          error: "Email inválido",
         }),
         name: t.String({ minLength: 1 }),
-        userType: t.Enum(UserType, { error: "Invalid User Type" }),
+        userType: t.Enum(UserType, { error: "Tipo de usuário é inválido" }),
       }),
     }),
   }

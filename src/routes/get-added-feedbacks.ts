@@ -11,12 +11,6 @@ export const getAddedFeedbacks = new Elysia({
   async ({ query, set }) => {
     const { participantName, limit } = query;
 
-    const participant = await prisma.participants.findFirst({
-      where: {
-        name: participantName,
-      },
-    });
-
     const feedbacks = await prisma.feedbacks.findMany({
       where: {
         reviewer: participantName,
@@ -26,7 +20,7 @@ export const getAddedFeedbacks = new Elysia({
 
     if (!feedbacks.length) {
       set.status = 400;
-      return { message: "No feedbacks found for that user" };
+      return { message: "Não foram encontrados feedbacks para este usuário" };
     }
 
     set.status = 200;

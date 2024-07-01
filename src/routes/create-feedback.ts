@@ -14,17 +14,22 @@ export const createFeedback = new Elysia({
 
     const feedbackId = randomUUID();
 
-    await prisma.feedbacks.create({
-      data: {
-        id: feedbackId,
-        reviewer: feedbackObject.reviewer,
-        date: new Date(),
-        reviewed: feedbackObject.reviewed,
-        questions: feedbackObject.questions,
-      },
-    });
+    try {
+      await prisma.feedbacks.create({
+        data: {
+          id: feedbackId,
+          reviewer: feedbackObject.reviewer,
+          date: new Date(),
+          reviewed: feedbackObject.reviewed,
+          questions: feedbackObject.questions,
+        },
+      });
+    } catch (error) {
+      set.status = 400;
+      return { message: "Erro ao criar feedback" };
+    }
 
-    set.status = 200;
+  
     return { message: "Feedback criado com sucesso" };
   },
   {

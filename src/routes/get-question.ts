@@ -18,7 +18,7 @@ export const getQuestion = new Elysia({
 
     if (!questionsSet) {
       set.status = 400;
-      return { message: "No set of questions found" };
+      return { message: "Método de avaliação não foi encontrado, tente novamente." };
     }
 
     set.status = 200;
