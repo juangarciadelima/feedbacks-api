@@ -6,14 +6,31 @@ export const getParticipants = new Elysia({
   detail: {
     description: "Get all participants in the system",
   },
-}).get("/list-participants", async ({ set }) => {
-  const participants = await prisma.participants.findMany();
+}).get(
+  "/list-participants",
+  async ({ query, set }) => {
+    const { userName } = query;
+    const participants = await prisma.participants.findMany({
+      where: {
+        NOT: {
+          name: {
+            startsWith: userName,
+          },
+        },
+      },
+    });
 
-  if (!participants.length) {
-    set.status = 400;
-    return { message: "Não há participantes" };
+    if (!participants.length) {
+      set.status = 400;
+      return { message: "Não há participantes" };
+    }
+
+    set.status = 200;
+    return { participants };
+  },
+  {
+    params: t.Object({
+      userName: t.String({ minLength: 1 }),
+    }),
   }
-
-  set.status = 200;
-  return { participants };
-});
+);
