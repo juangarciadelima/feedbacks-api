@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma.ts";
 import { UserType } from "@prisma/client";
 import { randomUUID } from "crypto";
-import { Elysia, error, t } from "elysia";
+import { Elysia, t } from "elysia";
 
 export const saveUser = new Elysia({
   tags: ["User"],
@@ -15,14 +15,23 @@ export const saveUser = new Elysia({
 
     const userId = randomUUID();
 
-    await prisma.participants.create({
-      data: {
-        email: userObject.email,
-        name: userObject.name,
-        id: userId,
-        userType: userObject.userType,
-      },
-    });
+    if (
+      !(await prisma.participants.findFirst({
+        where: { email: userObject.email },
+      }))
+    ) {
+      await prisma.participants.create({
+        data: {
+          email: userObject.email,
+          name: userObject.name,
+          id: userId,
+          userType: userObject.userType,
+        },
+      });
+    } else {
+      set.status = 400;
+      return { message: "Usuário já cadastrado" };
+    }
 
     set.status = 200;
     return { message: "Usuário salvo com sucesso" };
