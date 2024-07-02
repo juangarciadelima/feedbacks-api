@@ -9,17 +9,16 @@ export const getParticipants = new Elysia({
 }).get(
   "/list-participants",
   async ({ query, set }) => {
-    const { userName } = query;
+    const { email } = query;
 
-    console.log("user received ->", userName);
     const participants = await prisma.participants.findMany({
       orderBy: {
         name: "asc",
       },
       where: {
         NOT: {
-          name: {
-            equals: userName,
+          email: {
+            equals: email,
           },
         },
       },
@@ -35,7 +34,7 @@ export const getParticipants = new Elysia({
   },
   {
     params: t.Object({
-      userName: t.String({ minLength: 1 }),
+      email: t.String({ minLength: 1, format: "email" }),
     }),
   }
 );
