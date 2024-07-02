@@ -14,7 +14,7 @@ export const getParticipants = new Elysia({
       where: {
         NOT: {
           name: {
-            startsWith: userName,
+            equals: userName,
           },
         },
       },
