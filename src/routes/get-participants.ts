@@ -30,7 +30,11 @@ export const getParticipants = new Elysia({
     }
 
     set.status = 200;
-    return { participants };
+    return participants.map((participant) => ({
+      name: participant.name,
+      email: participant.email,
+      userType: participant.userType,
+    }));
   },
   {
     query: t.Object({
