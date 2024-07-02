@@ -33,7 +33,7 @@ export const getParticipants = new Elysia({
     return { participants };
   },
   {
-    params: t.Object({
+    query: t.Object({
       email: t.String({ minLength: 1, format: "email" }),
     }),
   }
