@@ -8,12 +8,15 @@ export const getAddedFeedbacks = new Elysia({
   },
 }).get(
   "/list-feedbacks/added",
-  async ({ query, set }) => {
-    const { participantName, limit } = query;
+  async ({ body, query, set }) => {
+    const { participantName } = body;
+    const { limit } = query;
 
     const feedbacks = await prisma.feedbacks.findMany({
       where: {
-        reviewer: participantName,
+        reviewer: {
+          equals: participantName,
+        },
       },
       take: limit,
     });
@@ -38,6 +41,9 @@ export const getAddedFeedbacks = new Elysia({
     query: t.Object({
       participantName: t.String(),
       limit: t.Optional(t.Number({ minimum: 1 })),
+    }),
+    body: t.Object({
+      participantName: t.String(),
     }),
   }
 );
