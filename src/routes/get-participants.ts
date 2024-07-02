@@ -10,6 +10,8 @@ export const getParticipants = new Elysia({
   "/list-participants",
   async ({ query, set }) => {
     const { userName } = query;
+
+    console.log("user received ->", userName);
     const participants = await prisma.participants.findMany({
       orderBy: {
         name: "asc",
