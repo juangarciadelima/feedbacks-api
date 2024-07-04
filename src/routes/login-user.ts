@@ -19,7 +19,11 @@ export const loginUser = new Elysia({
       return { message: "Usuário não possui login no sistema" };
     } else {
       set.status = 200;
-      return databaseUser;
+      return {
+        name: databaseUser.name,
+        email: databaseUser.email,
+        role: databaseUser.userType,
+      };
     }
   },
   {
