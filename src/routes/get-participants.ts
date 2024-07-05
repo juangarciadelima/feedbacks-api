@@ -16,11 +16,15 @@ export const getParticipants = new Elysia({
         name: "asc",
       },
       where: {
-        NOT: {
-          email: {
-            equals: email,
-          },
-        },
+        ...(!email
+          ? {}
+          : {
+              NOT: {
+                email: {
+                  equals: email,
+                },
+              },
+            }),
       },
     });
 
@@ -38,7 +42,7 @@ export const getParticipants = new Elysia({
   },
   {
     query: t.Object({
-      email: t.String({ minLength: 1, format: "email" }),
+      email: t.Optional(t.String({ minLength: 1, format: "email" })),
     }),
   }
 );
