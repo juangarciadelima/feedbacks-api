@@ -20,6 +20,7 @@ export const createQuestion = new Elysia({
           id: randomUUID(),
           questionSetName: questionSetObject.questionSetName,
           questions: questionSetObject.questions,
+          activatedSet: false,
         },
       });
     } catch (error) {

@@ -11,6 +11,8 @@ import { saveUser } from "@/routes/save-user.ts";
 import { createQuestion } from "@/routes/create-question.ts";
 import { cors } from "@elysiajs/cors";
 import { loginUser } from "@/routes/login-user.ts";
+import { activateGroup } from "@/routes/activate-group.ts";
+import { getActivatedGroup } from "@/routes/get-activated-group.ts";
 
 const port = process.env.PORT || 3333;
 
@@ -38,6 +40,8 @@ export const app = new Elysia({ prefix: "/api" })
   .use(createFeedback)
   .use(createQuestion)
   .use(loginUser)
+  .use(activateGroup)
+  .use(getActivatedGroup)
   .listen(port);
 
 console.log(
