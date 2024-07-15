@@ -41,7 +41,6 @@ export const createFeedback = new Elysia({
       feedback: t.Object({
         reviewer: t.String({ minLength: 1 }),
         reviewed: t.String({ minLength: 1 }),
-        id: t.String(),
         questions: t.Array(
           t.Object({
             question: t.Object({
