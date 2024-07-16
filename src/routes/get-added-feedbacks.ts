@@ -4,7 +4,7 @@ import { prisma } from "../lib/prisma.ts";
 export const getAddedFeedbacks = new Elysia({
   tags: ["Feedbacks"],
   detail: {
-    description: "Get received and added feedbacks by user",
+    description: "Get added feedbacks by user",
   },
 }).get(
   "/list-feedbacks/added",

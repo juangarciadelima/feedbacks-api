@@ -5,7 +5,7 @@ import { Elysia, t } from "elysia";
 export const activateGroup = new Elysia({
   tags: ["General"],
   detail: {
-    description: "Create a Question Set",
+    description: "Activate a Question Set as default",
   },
 }).post(
   "/activate-group",

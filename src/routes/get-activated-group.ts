@@ -5,7 +5,7 @@ import { Elysia } from "elysia";
 export const getActivatedGroup = new Elysia({
   tags: ["General"],
   detail: {
-    description: "Create a Question Set",
+    description: "Get the activated Question Set",
   },
 }).get("/activated-group", async ({ set }) => {
   const activatedQuestionSet = await prisma.questionsSet.findFirstOrThrow({

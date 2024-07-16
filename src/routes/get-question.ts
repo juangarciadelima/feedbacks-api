@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma.ts";
 export const getQuestion = new Elysia({
   tags: ["General"],
   detail: {
-    description: "Get questions set for the feedbacks",
+    description: "Get question set for the feedback",
   },
 }).get(
   "/list-question/:setName",

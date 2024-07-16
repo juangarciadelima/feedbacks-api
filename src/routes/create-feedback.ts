@@ -5,7 +5,7 @@ import { Elysia, t } from "elysia";
 export const createFeedback = new Elysia({
   tags: ["Feedbacks"],
   detail: {
-    description: "Get received and added feedbacks by user",
+    description: "Create a feedback",
   },
 }).post(
   "/feedback",

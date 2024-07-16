@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma.ts";
 export const getQuestions = new Elysia({
   tags: ["General"],
   detail: {
-    description: "Get questions set for the feedbacks",
+    description: "Get all the Questions Set",
   },
 }).get("/list-questions", async ({ set }) => {
   const questions = await prisma.questionsSet.findMany();
