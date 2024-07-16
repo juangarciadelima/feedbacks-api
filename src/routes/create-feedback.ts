@@ -33,7 +33,7 @@ export const createFeedback = new Elysia({
       return { message: "Erro ao criar feedback", error: error.message };
     }
 
-    return { message: "Feedback criado com sucesso" };
+    return new Response(null, {status: 204});
   },
   {
     body: t.Object({

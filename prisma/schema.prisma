@@ -62,6 +62,6 @@ model QuestionsSet {
 type Questions {
   id                  String       @default(cuid()) @map("_id")
   questionName        String
-  questionDescription String
+  questionDescription String?
   questionType        QuestionType
 }
