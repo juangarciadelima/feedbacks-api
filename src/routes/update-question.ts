@@ -3,13 +3,13 @@ import { QuestionType } from "@prisma/client";
 import { Elysia, t } from "elysia";
 
 export const updateQuestion = new Elysia({
-  tags: ["Genberal"],
+  tags: ["General"],
   detail: {
     description: "Update a Question Set",
   },
 }).put(
   "/question/:questionId",
-  async ({ params, body, set }) => {
+  async ({ params, body }) => {
     const { questionId } = params;
 
     await prisma.questionsSet.update({
@@ -17,7 +17,7 @@ export const updateQuestion = new Elysia({
         id: questionId,
       },
       data: {
-        ...body,
+        ...body.questionSet,
       },
     });
 
