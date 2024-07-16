@@ -49,8 +49,14 @@ export const activateGroup = new Elysia({
       set.status = 200;
       return { message: "Método de avaliação criado com sucesso" };
     } else {
-      set.status = 400;
-      return { message: "Nenhum método de avaliação padrão foi encontrado" };
+      await prisma.questionsSet.update({
+        where: {
+          id: questionSet?.id,
+        },
+        data: {
+          activatedSet: true,
+        },
+      });
     }
   },
   {

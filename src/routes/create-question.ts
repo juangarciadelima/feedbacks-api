@@ -13,14 +13,18 @@ export const createQuestion = new Elysia({
   async ({ body, set }) => {
     const { questionSet: questionSetObject } = body;
 
+    const isActivatedSet = await prisma.questionsSet.findFirst({
+      where: { activatedSet: true },
+    });
+
     try {
       await prisma.questionsSet.create({
         data: {
-          numberOfStars: questionSetObject.numberOfStars,
+          activatedSet: isActivatedSet ? false : true,
           id: randomUUID(),
+          numberOfStars: questionSetObject.numberOfStars,
           questionSetName: questionSetObject.questionSetName,
           questions: questionSetObject.questions,
-          activatedSet: false,
         },
       });
     } catch (error: any) {
@@ -39,6 +43,7 @@ export const createQuestion = new Elysia({
       questionSet: t.Object({
         numberOfStars: t.Number({ minimum: 1 }),
         questionSetName: t.String({ minLength: 1 }),
+        activatedSet: t.Boolean(),
         questions: t.Array(
           t.Object({
             questionName: t.String(),
