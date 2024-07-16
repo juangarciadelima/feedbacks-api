@@ -25,15 +25,14 @@ export const createFeedback = new Elysia({
           avaliation: {
             avaliationTitle: feedbackObject.avaliation.avaliationTitle,
             numberOfStars: feedbackObject.avaliation.numberOfStars,
-          }
+          },
         },
       });
-    } catch (error) {
+    } catch (error: any) {
       set.status = 400;
-      return { message: "Erro ao criar feedback" };
+      return { message: "Erro ao criar feedback", error: error.message };
     }
 
-  
     return { message: "Feedback criado com sucesso" };
   },
   {
@@ -45,6 +44,7 @@ export const createFeedback = new Elysia({
           t.Object({
             question: t.Object({
               questionName: t.String(),
+              questionDescription: t.String(),
               rating: t.Number({ minimum: 1 }),
               observation: t.Union([t.String({ minLength: 1 }), t.Null()]),
               justification: t.Optional(t.String({ minLength: 1 })),
@@ -54,7 +54,7 @@ export const createFeedback = new Elysia({
         avaliation: t.Object({
           avaliationTitle: t.String({ minLength: 1 }),
           numberOfStars: t.Number({ minimum: 1 }),
-        })
+        }),
       }),
     }),
   }
