@@ -22,9 +22,9 @@ export const createFeedback = new Elysia({
           date: new Date(),
           reviewed: feedbackObject.reviewed,
           questions: feedbackObject.questions,
-          avaliation: {
-            avaliationTitle: feedbackObject.avaliation.avaliationTitle,
-            numberOfStars: feedbackObject.avaliation.numberOfStars,
+          avaliationInfo: {
+            groupTitle: feedbackObject.avaliationInfo.groupTitle,
+            numberOfStars: feedbackObject.avaliationInfo.numberOfStars,
           },
         },
       });
@@ -50,8 +50,8 @@ export const createFeedback = new Elysia({
             }),
           })
         ),
-        avaliation: t.Object({
-          avaliationTitle: t.String({ minLength: 1 }),
+        avaliationInfo: t.Object({
+          groupTitle: t.String({ minLength: 1 }),
           numberOfStars: t.Number({ minimum: 1 }),
         }),
       }),

@@ -30,18 +30,18 @@ type QuestionsRatings {
   question Question
 }
 
-type Avaliation {
-  avaliationTitle String
-  numberOfStars   Int
+type AvaliationInfo {
+  groupTitle    String
+  numberOfStars Int
 }
 
 model Feedbacks {
-  id         String             @id @default(cuid()) @map("_id")
-  reviewed   String
-  reviewer   String
-  date       DateTime           @default(now())
-  questions  QuestionsRatings[]
-  avaliation Avaliation
+  id             String             @id @default(cuid()) @map("_id")
+  reviewed       String
+  reviewer       String
+  date           DateTime           @default(now())
+  questions      QuestionsRatings[]
+  avaliationInfo AvaliationInfo
 }
 
 model Participants {
