@@ -17,6 +17,7 @@ export const createQuestion = new Elysia({
       where: { activatedSet: true },
     });
 
+
     try {
       await prisma.questionsSet.create({
         data: {
@@ -43,7 +44,6 @@ export const createQuestion = new Elysia({
       questionSet: t.Object({
         numberOfStars: t.Number({ minimum: 1 }),
         questionSetName: t.String({ minLength: 1 }),
-        activatedSet: t.Boolean(),
         questions: t.Array(
           t.Object({
             questionName: t.String(),
