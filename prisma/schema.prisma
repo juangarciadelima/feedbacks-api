@@ -19,11 +19,10 @@ enum UserType {
 }
 
 type Question {
-  questionName        String
-  questionDescription String
-  rating              Int
-  observation         String?
-  justification       String?
+  questionName  String
+  rating        Int
+  observation   String?
+  justification String?
 }
 
 type QuestionsRatings {
