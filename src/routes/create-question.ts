@@ -23,9 +23,12 @@ export const createQuestion = new Elysia({
           activatedSet: false,
         },
       });
-    } catch (error) {
+    } catch (error: any) {
       set.status = 400;
-      return { message: "Erro ao criar método de avaliação" };
+      return {
+        message: "Erro ao criar método de avaliação",
+        error: error.message,
+      };
     }
 
     set.status = 200;
