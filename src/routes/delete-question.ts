@@ -10,11 +10,16 @@ export const deleteQuestion = new Elysia({
   "/question/:userId",
   async ({ params }) => {
     const { questionId } = params;
-    await prisma.questionsSet.delete({
-      where: {
-        id: questionId,
-      },
-    });
+
+    try {
+      await prisma.questionsSet.delete({
+        where: {
+          id: questionId,
+        },
+      });
+    } catch (error: any) {
+      return new Response(null, { status: 400, statusText: error.message });
+    }
 
     return new Response(null, { status: 204 });
   },

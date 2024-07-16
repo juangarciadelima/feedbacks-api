@@ -10,11 +10,16 @@ export const deleteUser = new Elysia({
   "/user/:userId",
   async ({ params }) => {
     const { userId } = params;
-    await prisma.participants.delete({
-      where: {
-        id: userId,
-      },
-    });
+
+    try {
+      await prisma.participants.delete({
+        where: {
+          id: userId,
+        },
+      });
+    } catch (error: any) {
+      return new Response(null, { status: 400, statusText: error.message });
+    }
 
     return new Response(null, { status: 204 });
   },
