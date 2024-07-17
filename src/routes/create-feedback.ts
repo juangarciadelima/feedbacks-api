@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma.ts";
+import { QuestionType } from "@prisma/client";
 import { randomUUID } from "crypto";
 import { Elysia, t } from "elysia";
 
@@ -43,8 +44,9 @@ export const createFeedback = new Elysia({
         questions: t.Array(
           t.Object({
             questionName: t.String(),
-            rating: t.Number({ minimum: 1 }),
-            observation: t.Union([t.String({ minLength: 1 }), t.Null()]),
+            rating: t.Optional(t.Number({ minimum: 1 })),
+            questionType: t.Enum(QuestionType),
+            observation: t.Optional(t.String()),
             justification: t.Optional(t.String({ minLength: 1 })),
           })
         ),

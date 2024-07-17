@@ -19,9 +19,10 @@ enum UserType {
 }
 
 type QuestionsRatings {
-  id            String  @default(cuid()) @map("_id")
+  id            String       @default(cuid()) @map("_id")
   questionName  String
-  rating        Int
+  rating        Int?
+  questionType  QuestionType
   observation   String?
   justification String?
 }
