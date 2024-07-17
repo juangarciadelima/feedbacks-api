@@ -19,12 +19,13 @@ enum UserType {
 }
 
 type QuestionsRatings {
-  id            String       @default(cuid()) @map("_id")
-  questionName  String
-  rating        Int?
-  questionType  QuestionType
-  observation   String?
-  justification String?
+  id                  String       @default(cuid()) @map("_id")
+  questionName        String
+  rating              Int?
+  questionType        QuestionType
+  questionDescription String?
+  observation         String?
+  justification       String?
 }
 
 type AvaliationInfo {
