@@ -44,11 +44,6 @@ export const getFeedbacks = new Elysia({
       take: limit,
     });
 
-    if (!addedFeedbacks.length && !receivedFeedbacks.length) {
-      set.status = 400;
-      return { message: "Não foram encontradas avaliações" };
-    }
-
     return { addedFeedbacks, receivedFeedbacks };
   },
   {
