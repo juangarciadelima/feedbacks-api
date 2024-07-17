@@ -47,7 +47,7 @@ export const createFeedback = new Elysia({
             rating: t.Optional(t.Number({ minimum: 1 })),
             questionType: t.Enum(QuestionType),
             observation: t.Optional(t.String()),
-            justification: t.Optional(t.String({ minLength: 1 })),
+            justification: t.Optional(t.String()),
           })
         ),
         avaliationInfo: t.Object({
