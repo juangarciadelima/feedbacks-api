@@ -18,16 +18,12 @@ enum UserType {
   ADMIN
 }
 
-type Question {
+type QuestionsRatings {
+  id            String  @default(cuid()) @map("_id")
   questionName  String
   rating        Int
   observation   String?
   justification String?
-}
-
-type QuestionsRatings {
-  id       String   @default(cuid()) @map("_id")
-  question Question
 }
 
 type AvaliationInfo {
