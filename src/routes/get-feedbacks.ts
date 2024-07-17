@@ -1,7 +1,6 @@
 import { Elysia, t } from "elysia";
 import { prisma } from "../lib/prisma.ts";
 import type { Prisma } from "@prisma/client";
-import { ActionEnum } from "@/enums/actions.enum.ts";
 
 export const getFeedbacks = new Elysia({
   tags: ["Feedbacks"],
@@ -11,20 +10,12 @@ export const getFeedbacks = new Elysia({
 }).get(
   "/list-feedbacks",
   async ({ query, set }) => {
-    const { participantName, limit, startDate, endDate, action } = query;
+    const { participantName, limit, startDate, endDate } = query;
 
-    const where: Prisma.FeedbacksWhereInput = {};
-
-    if (action === ActionEnum.ADDED) {
-      where.reviewer = participantName;
-    }
-
-    if (action === ActionEnum.RECEIVED) {
-      where.reviewed = participantName;
-    }
+    const whereData: Prisma.FeedbacksWhereInput = {};
 
     if (startDate && endDate) {
-      where.date = {
+      whereData.date = {
         gte: new Date(startDate),
         lte: new Date(endDate),
       };
@@ -32,35 +23,33 @@ export const getFeedbacks = new Elysia({
 
     console.log("participantName ->", participantName);
 
-    // const receivedFeedbacks = await prisma.feedbacks.findMany({
-    //   omit: {
-    //     id: true,
-    //   },
-    //   where,
-    //   orderBy: {
-    //     date: "desc",
-    //   },
+    const addedFeedbacks = await prisma.feedbacks.findMany({
+      where: {
+        reviewer: participantName,
+        ...whereData,
+      },
+    });
 
-    //   take: limit,
-    // });
-
-    const feedbacks = await prisma.feedbacks.findMany({
+    const receivedFeedbacks = await prisma.feedbacks.findMany({
       omit: {
         id: true,
       },
-      where,
+      where: {
+        reviewed: participantName,
+        ...whereData,
+      },
       orderBy: {
         date: "desc",
       },
       take: limit,
     });
 
-    if (!feedbacks) {
+    if (!addedFeedbacks.length && !receivedFeedbacks.length) {
       set.status = 400;
       return { message: "Não foram encontradas avaliações" };
     }
 
-    return { feedbacks };
+    return { addedFeedbacks, receivedFeedbacks };
   },
   {
     query: t.Object({
@@ -68,7 +57,6 @@ export const getFeedbacks = new Elysia({
       limit: t.Optional(t.Numeric({ default: 10 })),
       startDate: t.Optional(t.String()),
       endDate: t.Optional(t.String()),
-      action: t.Enum(ActionEnum),
     }),
   }
 );
