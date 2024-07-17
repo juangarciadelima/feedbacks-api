@@ -35,8 +35,7 @@ export const createQuestion = new Elysia({
       };
     }
 
-    set.status = 200;
-    return { message: "Método de avaliação criado com sucesso" };
+    set.status = 201;
   },
   {
     body: t.Object({

@@ -7,13 +7,28 @@ export const getQuestions = new Elysia({
     description: "Get all the Questions Set",
   },
 }).get("/list-questions", async ({ set }) => {
-  const questions = await prisma.questionsSet.findMany();
+  const questions = await prisma.questionsSet.findMany({
+    orderBy: {
+      questionSetName: "asc",
+    },
+    select: {
+      questionSetName: true,
+      activatedSet: true,
+      numberOfStars: true,
+      questions: {
+        select: {
+          questionName: true,
+          questionType: true,
+          questionDescription: true,
+        },
+      },
+    },
+  });
 
   if (!questions.length) {
     set.status = 400;
     return { message: "Nenhum método de avaliação foi encontrado" };
   }
 
-  set.status = 200;
   return { questions };
 });

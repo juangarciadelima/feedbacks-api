@@ -33,8 +33,7 @@ export const saveUser = new Elysia({
       return { message: "Usuário já cadastrado" };
     }
 
-    set.status = 200;
-    return { message: "Usuário salvo com sucesso" };
+    set.status = 201;
   },
   {
     body: t.Object({

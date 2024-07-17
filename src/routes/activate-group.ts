@@ -21,43 +21,33 @@ export const activateGroup = new Elysia({
         where: { activatedSet: true },
       });
 
-    if (actualActivatedQuestionSet) {
-      await prisma.$transaction(async () => {
-        try {
-          await prisma.questionsSet.update({
+    await prisma.$transaction(async () => {
+      try {
+        actualActivatedQuestionSet &&
+          (await prisma.questionsSet.update({
             where: {
               id: actualActivatedQuestionSet.id,
             },
             data: {
               activatedSet: false,
             },
-          });
-          await prisma.questionsSet.update({
-            where: {
-              id: questionSet?.id,
-            },
-            data: {
-              activatedSet: true,
-            },
-          });
-        } catch (error) {
-          set.status = 400;
-          return { message: "Erro ao trocar método padrão de avaliação" };
-        }
-      });
+          }));
 
-      set.status = 200;
-      return { message: "Método de avaliação criado com sucesso" };
-    } else {
-      await prisma.questionsSet.update({
-        where: {
-          id: questionSet?.id,
-        },
-        data: {
-          activatedSet: true,
-        },
-      });
-    }
+        await prisma.questionsSet.update({
+          where: {
+            id: questionSet?.id,
+          },
+          data: {
+            activatedSet: true,
+          },
+        });
+      } catch (error) {
+        set.status = 400;
+        return { message: "Erro ao trocar método padrão de avaliação" };
+      }
+    });
+
+    set.status = 201;
   },
   {
     body: t.Object({

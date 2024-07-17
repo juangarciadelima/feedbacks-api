@@ -14,14 +14,27 @@ export const getQuestion = new Elysia({
       where: {
         questionSetName: setName,
       },
+      select: {
+        activatedSet: true,
+        questionSetName: true,
+        numberOfStars: true,
+        questions: {
+          select: {
+            questionName: true,
+            questionType: true,
+            questionDescription: true,
+          },
+        },
+      },
     });
 
     if (!questionsSet) {
       set.status = 400;
-      return { message: "Método de avaliação não foi encontrado, tente novamente." };
+      return {
+        message: "Método de avaliação não foi encontrado, tente novamente.",
+      };
     }
 
-    set.status = 200;
     return { questionsSet };
   },
   {

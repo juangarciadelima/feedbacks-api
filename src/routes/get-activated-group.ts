@@ -20,6 +20,5 @@ export const getActivatedGroup = new Elysia({
     return { message: "Nenhum método de avaliação padrão foi encontrado" };
   }
 
-  set.status = 200;
   return { activatedQuestionSet };
 });

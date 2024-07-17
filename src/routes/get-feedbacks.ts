@@ -11,44 +11,36 @@ export const getFeedbacks = new Elysia({
   async ({ query, set }) => {
     const { participantName, limit } = query;
 
-    const participant = await prisma.participants.findFirst({
-      where: {
-        name: participantName,
-      },
-    });
-
     const feedbacks = await prisma.feedbacks.findMany({
+      omit: {
+        id: true,
+      },
       where: {
         reviewed: participantName,
+        AND: {
+          reviewer: {
+            equals: participantName,
+          },
+        },
       },
+      orderBy: {
+        date: "desc",
+      },
+
       take: limit,
     });
 
-    if (!feedbacks.length) {
+    if (!feedbacks) {
       set.status = 400;
       return { message: "Não foram encontradas avaliações" };
     }
 
-    if (participant?.userType !== "ADMIN") {
-      set.status = 403;
-      return { message: "Você não tem autorização para acessar este endpoint" };
-    }
-
-    set.status = 200;
-    return [
-      feedbacks.map((feedback) => ({
-        id: feedback.id,
-        reviewer: feedback.reviewer,
-        reviewed: feedback.reviewed,
-        date: feedback.date,
-        questions: feedback.questions,
-      })),
-    ];
+    return { feedbacks };
   },
   {
     query: t.Object({
       participantName: t.Optional(t.String()),
-      limit: t.Optional(t.Number({ minimum: 1 })),
+      limit: t.Optional(t.Numeric({ default: 10 })),
     }),
   }
 );

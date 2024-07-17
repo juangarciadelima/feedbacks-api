@@ -1,5 +1,6 @@
 import { Elysia, t } from "elysia";
 import { prisma } from "@/lib/prisma.ts";
+import type { Prisma } from "@prisma/client";
 
 export const getParticipants = new Elysia({
   tags: ["General"],
@@ -11,34 +12,33 @@ export const getParticipants = new Elysia({
   async ({ query, set }) => {
     const { email } = query;
 
+    const where: Prisma.ParticipantsWhereInput = {};
+
+    if (email) {
+      where.email = {
+        not: email,
+      };
+    } else {
+      where.email = {};
+    }
+
     const participants = await prisma.participants.findMany({
+      omit: {
+        id: true,
+      },
       orderBy: {
         name: "asc",
       },
-      where: {
-        ...(!email
-          ? {}
-          : {
-              NOT: {
-                email: {
-                  equals: email,
-                },
-              },
-            }),
-      },
+      where,
     });
 
-    if (!participants.length) {
+    if (!participants) {
       set.status = 400;
       return { message: "Não há participantes" };
     }
 
     set.status = 200;
-    return participants.map((participant) => ({
-      name: participant.name,
-      email: participant.email,
-      userType: participant.userType,
-    }));
+    return { participants };
   },
   {
     query: t.Object({
