@@ -12,6 +12,7 @@ export const getQuestions = new Elysia({
       questionSetName: "asc",
     },
     select: {
+      id: true,
       questionSetName: true,
       activatedSet: true,
       numberOfStars: true,

@@ -23,9 +23,6 @@ export const getParticipants = new Elysia({
     }
 
     const participants = await prisma.participants.findMany({
-      omit: {
-        id: true,
-      },
       orderBy: {
         name: "asc",
       },
