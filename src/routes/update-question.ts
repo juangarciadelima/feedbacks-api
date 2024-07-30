@@ -21,7 +21,7 @@ export const updateQuestion = new Elysia({
 			},
 		})
 
-		if (isWritableQuestionSet) {
+		if (isWritableQuestionSet?.writable) {
 			await prisma.questionsSet.update({
 				where: {
 					id: questionSetId,
