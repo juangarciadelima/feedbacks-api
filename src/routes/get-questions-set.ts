@@ -2,7 +2,7 @@ import { Elysia } from "elysia"
 import { prisma } from "@/lib/prisma.ts"
 
 export const getQuestions = new Elysia({
-	tags: ["General"],
+	tags: ["Question Set"],
 	detail: {
 		description: "Get all the Questions Set",
 	},

@@ -4,7 +4,7 @@ import { randomUUID } from "node:crypto"
 import { Elysia, t } from "elysia"
 
 export const createQuestion = new Elysia({
-	tags: ["General"],
+	tags: ["Question Set"],
 	detail: {
 		description: "Create a Question Set",
 	},

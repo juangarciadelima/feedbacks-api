@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma.ts"
 import { Elysia } from "elysia"
 
 export const getActivatedGroup = new Elysia({
-	tags: ["General"],
+	tags: ["Question Set"],
 	detail: {
 		description: "Get the activated Question Set",
 	},

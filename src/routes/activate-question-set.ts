@@ -2,13 +2,13 @@ import { prisma } from "@/lib/prisma.ts"
 
 import { Elysia, t } from "elysia"
 
-export const activateGroup = new Elysia({
-	tags: ["General"],
+export const activateQuestionSet = new Elysia({
+	tags: ["Question Set"],
 	detail: {
 		description: "Activate a Question Set as default",
 	},
 }).post(
-	"/activate-group",
+	"/activate-question-set",
 	async ({ body, set }) => {
 		const { questionSetTitle } = body
 

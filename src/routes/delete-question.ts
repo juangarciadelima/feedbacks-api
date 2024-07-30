@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma.ts"
 import { Elysia, t } from "elysia"
 
 export const deleteQuestion = new Elysia({
-	tags: ["General"],
+	tags: ["Question Set"],
 	detail: {
 		description: "Delete a Question Set",
 	},

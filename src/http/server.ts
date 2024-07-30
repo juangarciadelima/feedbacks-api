@@ -8,7 +8,7 @@ import { saveUser } from "@/routes/save-user.ts"
 import { createQuestion } from "@/routes/create-question.ts"
 import { cors } from "@elysiajs/cors"
 import { loginUser } from "@/routes/login-user.ts"
-import { activateGroup } from "@/routes/activate-group.ts"
+import { activateQuestionSet } from "@/routes/activate-question-set.ts"
 import { getActivatedGroup } from "@/routes/get-activated-group.ts"
 import { updateUser } from "@/routes/update-user.ts"
 import { deleteUser } from "@/routes/delete-user.ts"
@@ -16,7 +16,6 @@ import { updateQuestion } from "@/routes/update-question.ts"
 import { deleteQuestion } from "@/routes/delete-question.ts"
 import { getAddedFeedbacks } from "@/routes/get-added-feedbacks.ts"
 import { getReceivedFeedbacks } from "@/routes/get-received-feedbacks.ts"
-import { countQuestionsOfGroup } from "@/routes/count-questions-feedback.ts"
 
 const port = process.env.PORT || 3333
 
@@ -56,7 +55,7 @@ export const app = new Elysia({ prefix: "/api" })
 	.use(createFeedback)
 	.use(createQuestion)
 	.use(loginUser)
-	.use(activateGroup)
+	.use(activateQuestionSet)
 	.use(getActivatedGroup)
 	.use(updateUser)
 	.use(deleteUser)
@@ -64,7 +63,6 @@ export const app = new Elysia({ prefix: "/api" })
 	.use(deleteQuestion)
 	.use(getAddedFeedbacks)
 	.use(getReceivedFeedbacks)
-	.use(countQuestionsOfGroup)
 	.onError(({ code, error, set }) => {
 		switch (code) {
 			case "VALIDATION": {

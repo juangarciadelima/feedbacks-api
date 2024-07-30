@@ -3,7 +3,7 @@ import { QuestionType } from "@prisma/client"
 import { Elysia, t } from "elysia"
 
 export const updateQuestion = new Elysia({
-	tags: ["General"],
+	tags: ["Question Set"],
 	detail: {
 		description: "Update a Question Set",
 	},
