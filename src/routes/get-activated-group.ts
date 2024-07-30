@@ -9,9 +9,6 @@ export const getActivatedGroup = new Elysia({
 	},
 }).get("/activated-group", async ({ set }) => {
 	const activatedQuestionSet = await prisma.questionsSet.findFirstOrThrow({
-		omit: {
-			id: true,
-		},
 		where: { activatedSet: true },
 	})
 
