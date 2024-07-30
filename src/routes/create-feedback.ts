@@ -12,12 +12,6 @@ export const createFeedback = new Elysia({
 	async ({ body, set }) => {
 		const { feedback: feedbackObject } = body
 
-		const isInvalid = feedbackObject.questions.some(
-			(question) =>
-				!question.rating || !question.observation || !question.justification,
-		)
-
-		if (!isInvalid) {
 			try {
 				await prisma.feedbacks.create({
 					data: {
@@ -41,12 +35,8 @@ export const createFeedback = new Elysia({
 			}
 
 			return new Response(null, { status: 201 })
-		}
 
-		return new Response(null, {
-			status: 400,
-			statusText: "Feedback doesn't have any ratings",
-		})
+
 	},
 	{
 		body: t.Object({
