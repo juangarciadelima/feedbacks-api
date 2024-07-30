@@ -8,7 +8,7 @@ export const updateQuestion = new Elysia({
 		description: "Update a Question Set",
 	},
 }).put(
-	"/question/:questionId",
+	"/question/:questionSetId",
 	async ({ params, body }) => {
 		const { questionSetId } = params
 
