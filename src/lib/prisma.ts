@@ -1,9 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client"
 
-let prisma: PrismaClient;
+let prisma: PrismaClient
 
 prisma = new PrismaClient({
-  log: ["query"],
-});
+	log: ["query"],
+})
 
-export { prisma };
+export { prisma }

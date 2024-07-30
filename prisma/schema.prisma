@@ -28,18 +28,14 @@ type QuestionsRatings {
   justification       String?
 }
 
-type AvaliationInfo {
-  groupTitle    String
-  numberOfStars Int
-}
-
 model Feedbacks {
-  id             String             @id @default(cuid()) @map("_id")
-  reviewed       String
-  reviewer       String
-  date           DateTime           @default(now())
-  questions      QuestionsRatings[]
-  avaliationInfo AvaliationInfo
+  id            String             @id @default(cuid()) @map("_id")
+  reviewed      String
+  reviewer      String
+  date          DateTime           @default(now())
+  questions     QuestionsRatings[]
+  questionSet   QuestionsSet?      @relation(fields: [questionSetId], references: [id], onDelete: Cascade)
+  questionSetId String?
 }
 
 model Participants {
@@ -47,6 +43,8 @@ model Participants {
   name     String
   email    String
   userType UserType
+
+  @@unique([email, name])
 }
 
 model QuestionsSet {
@@ -55,11 +53,13 @@ model QuestionsSet {
   questions       Questions[]
   numberOfStars   Int
   activatedSet    Boolean
+  feedbacks       Feedbacks[]
+  writable        Boolean     @default(true)
 }
 
 type Questions {
   id                  String       @default(cuid()) @map("_id")
   questionName        String
-  questionDescription String?
+  questionDescription String?      @default("")
   questionType        QuestionType
 }

@@ -1,31 +1,32 @@
-import { prisma } from "@/lib/prisma.ts";
-import { Elysia, t } from "elysia";
+import { prisma } from "@/lib/prisma.ts"
+import { Elysia, t } from "elysia"
 
 export const deleteQuestion = new Elysia({
-  tags: ["General"],
-  detail: {
-    description: "Delete a Question Set",
-  },
+	tags: ["General"],
+	detail: {
+		description: "Delete a Question Set",
+	},
 }).delete(
-  "/question/:questionId",
-  async ({ params }) => {
-    const { questionId } = params;
+	"/question/:questionId",
+	async ({ params }) => {
+		const { questionId } = params
 
-    try {
-      await prisma.questionsSet.delete({
-        where: {
-          id: questionId,
-        },
-      });
-    } catch (error: any) {
-      return new Response(null, { status: 400, statusText: error.message });
-    }
+		try {
+			await prisma.questionsSet.delete({
+				where: {
+					id: questionId,
+				},
+			})
+		} catch (err) {
+			console.log(err)
+			return new Response(null, { status: 400 })
+		}
 
-    return new Response(null, { status: 204 });
-  },
-  {
-    params: t.Object({
-      questionId: t.String({ minLength: 1 }),
-    }),
-  }
-);
+		return new Response(null, { status: 204 })
+	},
+	{
+		params: t.Object({
+			questionId: t.String({ minLength: 1 }),
+		}),
+	},
+)

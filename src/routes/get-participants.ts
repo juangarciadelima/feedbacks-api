@@ -1,45 +1,45 @@
-import { Elysia, t } from "elysia";
-import { prisma } from "@/lib/prisma.ts";
-import type { Prisma } from "@prisma/client";
+import { Elysia, t } from "elysia"
+import { prisma } from "@/lib/prisma.ts"
+import type { Prisma } from "@prisma/client"
 
 export const getParticipants = new Elysia({
-  tags: ["General"],
-  detail: {
-    description: "Get all participants in the system",
-  },
+	tags: ["General"],
+	detail: {
+		description: "Get all participants in the system",
+	},
 }).get(
-  "/list-participants",
-  async ({ query, set }) => {
-    const { email } = query;
+	"/list-participants",
+	async ({ query, set }) => {
+		const { email } = query
 
-    const where: Prisma.ParticipantsWhereInput = {};
+		const where: Prisma.ParticipantsWhereInput = {}
 
-    if (email) {
-      where.email = {
-        not: email,
-      };
-    } else {
-      where.email = {};
-    }
+		if (email) {
+			where.email = {
+				not: email,
+			}
+		} else {
+			where.email = {}
+		}
 
-    const participants = await prisma.participants.findMany({
-      orderBy: {
-        name: "asc",
-      },
-      where,
-    });
+		const participants = await prisma.participants.findMany({
+			orderBy: {
+				name: "asc",
+			},
+			where,
+		})
 
-    if (!participants) {
-      set.status = 400;
-      return { message: "Não há participantes" };
-    }
+		if (!participants) {
+			set.status = 400
+			return { message: "Não há participantes" }
+		}
 
-    set.status = 200;
-    return { participants };
-  },
-  {
-    query: t.Object({
-      email: t.Optional(t.String({ minLength: 1, format: "email" })),
-    }),
-  }
-);
+		set.status = 200
+		return { participants }
+	},
+	{
+		query: t.Object({
+			email: t.Optional(t.String({ minLength: 1, format: "email" })),
+		}),
+	},
+)

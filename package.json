@@ -1,29 +1,33 @@
 {
-  "name": "feedbacks-api",
-  "module": "index.ts",
-  "type": "module",
-  "scripts": {
-    "dev": "bun --watch src/http/server.ts",
-    "build": "prisma generate && bun build src/http/server.ts"
-  },
-  "devDependencies": {
-    "@types/bun": "latest",
-    "@types/node": "^20.12.12",
-    "prisma": "^5.14.0",
-    "tsx": "^4.10.5",
-    "typescript": "^5.4.5"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "@elysiajs/cors": "^1.0.2",
-    "@elysiajs/swagger": "^1.0.5",
-    "@fastify/autoload": "^5.8.3",
-    "@grotto/logysia": "^0.1.4",
-    "@prisma/client": "5.14.0",
-    "elysia": "^1.0.22",
-    "logestic": "^1.2.0",
-    "zod": "^3.23.8"
-  }
+	"name": "feedbacks-api",
+	"module": "index.ts",
+	"type": "module",
+	"scripts": {
+		"dev": "bun --watch src/http/server.ts",
+		"build": "prisma generate && bun build src/http/server.ts",
+		"format": "bun biome format --write ."
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.8.3",
+		"@types/bun": "latest",
+		"@types/node": "^20.12.12",
+		"prisma": "^5.14.0",
+		"tsx": "^4.10.5",
+		"typescript": "^5.4.5"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"@elysiajs/cors": "^1.0.2",
+		"@elysiajs/eden": "^1.1.2",
+		"@elysiajs/swagger": "^1.0.5",
+		"@fastify/autoload": "^5.8.3",
+		"@grotto/logysia": "^0.1.4",
+		"@prisma/client": "5.14.0",
+		"elysia": "^1.0.22",
+		"logestic": "^1.2.0",
+		"zod": "^3.23.8"
+	},
+	"trustedDependencies": ["@biomejs/biome"]
 }
