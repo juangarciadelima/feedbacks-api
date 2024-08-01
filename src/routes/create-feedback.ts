@@ -12,31 +12,29 @@ export const createFeedback = new Elysia({
 	async ({ body, set }) => {
 		const { feedback: feedbackObject } = body
 
-			try {
-				await prisma.feedbacks.create({
-					data: {
-						reviewer: feedbackObject.reviewer,
-						reviewed: feedbackObject.reviewed,
-						questions: feedbackObject.questions,
-						questionSetId: feedbackObject.questionSetId,
-					},
-				})
+		try {
+			await prisma.feedbacks.create({
+				data: {
+					reviewer: feedbackObject.reviewer,
+					reviewed: feedbackObject.reviewed,
+					questions: feedbackObject.questions,
+					questionSetId: feedbackObject.questionSetId,
+				},
+			})
 
-				await prisma.questionsSet.update({
-					where: {
-						id: feedbackObject.questionSetId,
-					},
-					data: {
-						writable: false,
-					},
-				})
-			} catch (err) {
-				console.log(err)
-			}
+			await prisma.questionsSet.update({
+				where: {
+					id: feedbackObject.questionSetId,
+				},
+				data: {
+					writable: false,
+				},
+			})
+		} catch (err) {
+			console.log(err)
+		}
 
-			return new Response(null, { status: 201 })
-
-
+		return new Response(null, { status: 201 })
 	},
 	{
 		body: t.Object({
