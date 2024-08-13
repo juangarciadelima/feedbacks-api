@@ -36,7 +36,7 @@ model Feedbacks {
   questions       QuestionsRatings[]
   questionSet     QuestionsSet?      @relation(fields: [questionSetId], references: [id], onDelete: Cascade)
   questionSetId   String
-  questionSetName String
+  questionSetName String?
 }
 
 model Participants {
