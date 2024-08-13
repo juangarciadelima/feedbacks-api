@@ -12,31 +12,31 @@ export const createFeedback = new Elysia({
 	async ({ body, set }) => {
 		const { feedback: feedbackObject } = body
 
-			try {
-				await prisma.feedbacks.create({
-					data: {
-						reviewer: feedbackObject.reviewer,
-						reviewed: feedbackObject.reviewed,
-						questions: feedbackObject.questions,
-						questionSetId: feedbackObject.questionSetId,
-					},
-				})
 
-				await prisma.questionsSet.update({
-					where: {
-						id: feedbackObject.questionSetId,
-					},
-					data: {
-						writable: false,
-					},
-				})
-			} catch (err) {
-				console.log(err)
-			}
+		try {
+			await prisma.feedbacks.create({
+				data: {
+					reviewer: feedbackObject.reviewer,
+					reviewed: feedbackObject.reviewed,
+					questions: feedbackObject.questions,
+					questionSetId: feedbackObject.questionSetGroup.id,
+          questionSetName: feedbackObject.questionSetGroup.name,
+				},
+			})
 
-			return new Response(null, { status: 201 })
+			await prisma.questionsSet.update({
+				where: {
+					id: feedbackObject.questionSetGroup.id,
+				},
+				data: {
+					writable: false,
+				},
+			})
+		} catch (err) {
+			console.log(err)
+		}
 
-
+		return new Response(null, { status: 201 })
 	},
 	{
 		body: t.Object({
@@ -52,7 +52,10 @@ export const createFeedback = new Elysia({
 						justification: t.Optional(t.String()),
 					}),
 				),
-				questionSetId: t.String({ minLength: 1 }),
+				questionSetGroup: t.Object({
+					id: t.String({ minLength: 1 }),
+					name: t.String({ minLength: 1 }),
+				}),
 			}),
 		}),
 	},
