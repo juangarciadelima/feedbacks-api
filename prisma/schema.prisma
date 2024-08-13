@@ -29,13 +29,14 @@ type QuestionsRatings {
 }
 
 model Feedbacks {
-  id            String             @id @default(cuid()) @map("_id")
-  reviewed      String
-  reviewer      String
-  date          DateTime           @default(now())
-  questions     QuestionsRatings[]
-  questionSet   QuestionsSet?      @relation(fields: [questionSetId], references: [id], onDelete: Cascade)
-  questionSetId String?
+  id              String             @id @default(cuid()) @map("_id")
+  reviewed        String
+  reviewer        String
+  date            DateTime           @default(now())
+  questions       QuestionsRatings[]
+  questionSet     QuestionsSet?      @relation(fields: [questionSetId], references: [id], onDelete: Cascade)
+  questionSetId   String
+  questionSetName String
 }
 
 model Participants {
