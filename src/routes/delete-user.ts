@@ -7,7 +7,7 @@ export const deleteUser = new Elysia({
 		description: "Delete a User",
 	},
 }).delete(
-	"/user/:userId",
+	"/admin/user/:userId",
 	async ({ params }) => {
 		const { userId } = params
 

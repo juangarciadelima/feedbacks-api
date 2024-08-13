@@ -18,6 +18,8 @@ import { getAddedFeedbacks } from "@/routes/get-added-feedbacks.ts"
 import { getReceivedFeedbacks } from "@/routes/get-received-feedbacks.ts"
 import { authentication } from "./auth.ts"
 import { get } from "node:http"
+import { NotAAdminError } from "@/routes/errors/not-a-admin-error.ts"
+import { UserType } from "@prisma/client"
 
 const port = process.env.PORT || 3333
 
@@ -53,16 +55,22 @@ export const app = new Elysia({ prefix: "/api" })
 	.use(authentication)
 	.state('user', {})
 	.onBeforeHandle(async ({ getCurrentUser, path, store }) => {
+
 		if (path !== "/api/login-user") {
 			try {
 				const user = await getCurrentUser()
 				store.user = user
+
+				if(path.startsWith('/api/admin')) {
+					if(user.role !== UserType.ADMIN) {
+						throw new NotAAdminError()
+					}
+				}
 			} catch (err) {
-				console.log(err)
 				throw err
-			}
+			}		
 		}
-	})
+})
 	.use(getParticipants)
 	.use(getQuestion)
 	.use(getQuestions)

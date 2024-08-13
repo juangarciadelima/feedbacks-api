@@ -8,7 +8,7 @@ export const getQuestions = new Elysia({
 	detail: {
 		description: "Get all the Questions Set",
 	},
-}).get("/list-questions", async ({ set, store }) => {
+}).get("/admin/list-questions", async ({ set, store }) => {
 	const user: any = store
 	
 

@@ -9,7 +9,7 @@ export const createQuestion = new Elysia({
 		description: "Create a Question Set",
 	},
 }).post(
-	"/question",
+	"/admin/question",
 	async ({ body, set }) => {
 		const { questionSet: questionSetObject } = body
 
