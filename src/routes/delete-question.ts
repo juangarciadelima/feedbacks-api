@@ -7,7 +7,7 @@ export const deleteQuestion = new Elysia({
 		description: "Delete a Question Set",
 	},
 }).delete(
-	"/question/:questionId",
+	"/admin/question/:questionId",
 	async ({ params }) => {
 		const { questionId } = params
 

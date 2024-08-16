@@ -1,3 +1,4 @@
+import { authentication } from '@/http/auth.ts';
 import { Elysia, t } from "elysia"
 import { prisma } from "@/lib/prisma.ts"
 import type { Prisma } from "@prisma/client"
@@ -7,7 +8,7 @@ export const getParticipants = new Elysia({
 	detail: {
 		description: "Get all participants in the system",
 	},
-}).get(
+}).use(authentication).get(
 	"/list-participants",
 	async ({ query, set }) => {
 		const { email } = query

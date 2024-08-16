@@ -9,7 +9,7 @@ export const createFeedback = new Elysia({
 	},
 }).post(
 	"/feedback",
-	async ({ body, set }) => {
+	async ({ body }) => {
 		const { feedback: feedbackObject } = body
 
 
@@ -20,7 +20,6 @@ export const createFeedback = new Elysia({
 					reviewed: feedbackObject.reviewed,
 					questions: feedbackObject.questions,
 					questionSetId: feedbackObject.questionSetGroup.id,
-          questionSetName: feedbackObject.questionSetGroup.name,
 				},
 			})
 

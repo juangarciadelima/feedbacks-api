@@ -8,7 +8,7 @@ export const activateQuestionSet = new Elysia({
 		description: "Activate a Question Set as default",
 	},
 }).post(
-	"/activate-question-set",
+	"/admin/activate-question-set",
 	async ({ body, set }) => {
 		const { questionSetTitle } = body
 

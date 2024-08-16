@@ -8,7 +8,7 @@ export const updateUser = new Elysia({
 		description: "Update a User",
 	},
 }).put(
-	"/user/:userId",
+	"/admin/user/:userId",
 	async ({ params, body }) => {
 		const { userId } = params
 

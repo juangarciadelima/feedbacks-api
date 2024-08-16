@@ -1,30 +1,31 @@
 import { Elysia } from "elysia";
 import { prisma } from "@/lib/prisma.ts";
 
+
 export const getQuestions = new Elysia({
   tags: ["Question Set"],
   detail: {
-    description: "Get all the Questions Set",
-  },
+    description: "Get all the Questions Set"
+  }
 }).get("/list-questions", async ({ set }) => {
+
   const questions = await prisma.questionsSet.findMany({
     orderBy: {
-      questionSetName: "asc",
+      questionSetName: "asc"
     },
     select: {
       id: true,
       questionSetName: true,
       activatedSet: true,
       numberOfStars: true,
-      writable: true,
       questions: {
         select: {
           questionName: true,
           questionType: true,
-          questionDescription: true,
-        },
-      },
-    },
+          questionDescription: true
+        }
+      }
+    }
   });
 
   if (!questions.length) {
@@ -33,4 +34,5 @@ export const getQuestions = new Elysia({
   }
 
   return { questions };
+
 });
