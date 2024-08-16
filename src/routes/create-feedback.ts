@@ -9,8 +9,9 @@ export const createFeedback = new Elysia({
 	},
 }).post(
 	"/feedback",
-	async ({ body, set }) => {
+	async ({ body }) => {
 		const { feedback: feedbackObject } = body
+
 
 		try {
 			await prisma.feedbacks.create({
@@ -18,13 +19,13 @@ export const createFeedback = new Elysia({
 					reviewer: feedbackObject.reviewer,
 					reviewed: feedbackObject.reviewed,
 					questions: feedbackObject.questions,
-					questionSetId: feedbackObject.questionSetId,
+					questionSetId: feedbackObject.questionSetGroup.id,
 				},
 			})
 
 			await prisma.questionsSet.update({
 				where: {
-					id: feedbackObject.questionSetId,
+					id: feedbackObject.questionSetGroup.id,
 				},
 				data: {
 					writable: false,
@@ -50,7 +51,10 @@ export const createFeedback = new Elysia({
 						justification: t.Optional(t.String()),
 					}),
 				),
-				questionSetId: t.String({ minLength: 1 }),
+				questionSetGroup: t.Object({
+					id: t.String({ minLength: 1 }),
+					name: t.String({ minLength: 1 }),
+				}),
 			}),
 		}),
 	},
