@@ -20,7 +20,6 @@ import { authentication } from "./auth.ts";
 import { NotAAdminError } from "@/routes/errors/not-a-admin-error.ts";
 import { UserType } from "@prisma/client";
 import { registerUser } from "@/routes/register-user.ts";
-import { signOut } from "@/routes/sign-out.ts";
 
 const port = process.env.PORT || 3333;
 
@@ -40,12 +39,16 @@ export const app = new Elysia({ prefix: "/api" })
   .use(
     cors({
       credentials: true,
-      allowedHeaders: ["content-type"],
+      allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "access-control-allow-methods"
+      ],
       methods: ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"],
       origin: (request): boolean => {
         const origin = request.headers.get("Origin") || "";
-
         if (!origin) {
+          console.log("No origin header");
           return false;
         }
 
@@ -87,7 +90,6 @@ export const app = new Elysia({ prefix: "/api" })
   .use(getAddedFeedbacks)
   .use(getReceivedFeedbacks)
   .use(registerUser)
-  .use(signOut)
   .onError(({ code, error, set }) => {
     switch (code) {
       case "VALIDATION": {
@@ -106,6 +108,8 @@ export const app = new Elysia({ prefix: "/api" })
     }
   })
   .listen(port);
+
+app.get("/", () => "Hello from Elysia 🦊");
 
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`

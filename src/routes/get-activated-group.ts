@@ -12,16 +12,11 @@ export const getActivatedGroup = new Elysia({
 	},
 })
 	.use(authentication)
-	.get("/activated-group", async ({ getCurrentUser, set }) => {
+	.get("/activated-group", async ({ set }) => {
 		const activatedQuestionSet = await prisma.questionsSet.findFirstOrThrow({
 			where: { activatedSet: true },
 		})
 
-		const { role } = await getCurrentUser()
-
-		if (role !== "ADMIN") {
-			throw new NotAAdminError()
-		}
 
 		if (!activatedQuestionSet) {
 			set.status = 400

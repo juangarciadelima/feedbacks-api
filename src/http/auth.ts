@@ -10,6 +10,10 @@ const jwtPayloadSchema = t.Object({
   role: t.String()
 });
 
+const extractToken = (authorization: string) => {
+  return authorization.substring(7, authorization.length);
+};
+
 export const authentication = new Elysia()
   .error({
     UNAUTHORIZED: UnauthorizedError,
@@ -39,10 +43,12 @@ export const authentication = new Elysia()
     })
   )
   .use(cookie())
-  .derive(({ jwt, cookie: { auth } }) => {
+  .derive(({ jwt, headers }) => {
     return {
       getUser: async () => {
-        const user = await jwt.verify(auth.value);
+        const token = extractToken(headers.authorization ?? "");
+
+        const user = await jwt.verify(token);
 
         if (!user) {
           throw new UnauthorizedError();
@@ -51,15 +57,10 @@ export const authentication = new Elysia()
         return user;
       },
       signUser: async (payload: Static<typeof jwtPayloadSchema>) => {
-        auth.set({
-          value: await jwt.sign(payload),
-          httpOnly: true,
-          maxAge: 7 * 86400,
-          path: "/"
-        });
-      },
-      signOut: () => {
-        auth.remove();
+        return {
+          token_access: await jwt.sign(payload),
+          expires_in: 60 * 5
+        };
       }
     };
   })
