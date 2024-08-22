@@ -18,11 +18,13 @@ export const getQuestions = new Elysia({
       questionSetName: true,
       activatedSet: true,
       numberOfStars: true,
+      writable: true,
       questions: {
         select: {
           questionName: true,
           questionType: true,
           questionDescription: true
+
         }
       }
     }
