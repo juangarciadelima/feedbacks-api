@@ -20,6 +20,7 @@ export const createFeedback = new Elysia({
 					reviewed: feedbackObject.reviewed,
 					questions: feedbackObject.questions,
 					questionSetId: feedbackObject.questionSetGroup.id,
+					questionSetName: feedbackObject.questionSetGroup.name,
 				},
 			})
 
