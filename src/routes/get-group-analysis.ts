@@ -9,6 +9,7 @@ import type {
 
 import dayjs from "dayjs";
 import { authentication } from "@/http/auth.ts";
+import { convertToInternationalDate } from "@/utils/convert-to-international-date.ts";
 
 export const getGroupAnalysis = new Elysia({
   tags: ["Análises"],
@@ -21,14 +22,23 @@ export const getGroupAnalysis = new Elysia({
   .get(
     "/get-group-analysis",
     async ({ query }) => {
-      const { selectedGroup, amountOfTime } = query;
+      const { selectedGroup, startDate, endDate } = query;
 
-      const dataThreshold = dayjs(amountOfTime).toISOString();
+      const formattedEndDate = dayjs(
+        convertToInternationalDate(endDate),
+        "MM/DD/YYYY",
+      );
 
       const where: Prisma.FeedbacksWhereInput = {
         questionSetId: selectedGroup,
         date: {
-          gte: dataThreshold,
+          gte: startDate
+            ? dayjs(
+                convertToInternationalDate(startDate),
+                "MM/DD/YYYY",
+              ).toISOString()
+            : formattedEndDate.subtract(3, "month").toISOString(),
+          lte: formattedEndDate.toISOString(),
         },
       };
 
@@ -195,7 +205,8 @@ export const getGroupAnalysis = new Elysia({
     {
       query: t.Object({
         selectedGroup: t.String(),
-        amountOfTime: t.String(),
+        startDate: t.Optional(t.String()),
+        endDate: t.String(),
       }),
     },
   );
