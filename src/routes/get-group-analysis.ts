@@ -153,11 +153,13 @@ export const getGroupAnalysis = new Elysia({
                 (question) => question.id === actualQuestion.id,
               ),
             )?.reviewer,
-            date: feedbacksNumber.find((feedback) =>
-              feedback.questions.find(
-                (question) => question.id === actualQuestion.id,
-              ),
-            )?.date,
+            date: dayjs(
+              feedbacksNumber.find((feedback) =>
+                feedback.questions.find(
+                  (question) => question.id === actualQuestion.id,
+                ),
+              )?.date,
+            ).format("DD/MM/YYYY, HH:mm"),
           };
         },
       );
