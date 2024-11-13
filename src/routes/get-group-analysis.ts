@@ -103,6 +103,38 @@ export const getGroupAnalysis = new Elysia({
             .filter((question) => question.id === questionId)
             .map((question) => question.rating)
             .filter((rating) => rating !== null),
+          questions: questions
+            .filter(
+              (question) =>
+                question.questionName ===
+                questions.find((question) => question.id === questionId)
+                  ?.questionName,
+            )
+            .map((question) => {
+              return {
+                id: question.id,
+                questionName: question.questionName,
+                rating: question.rating,
+                justification: question.justification || null,
+                reviewed: feedbacksNumber.find((feedback) =>
+                  feedback.questions.find(
+                    (question) => question.id === questionId,
+                  ),
+                )?.reviewed,
+                reviewer: feedbacksNumber.find((feedback) =>
+                  feedback.questions.find(
+                    (question) => question.id === questionId,
+                  ),
+                )?.reviewer,
+                date: dayjs(
+                  feedbacksNumber.find((feedback) =>
+                    feedback.questions.find(
+                      (question) => question.id === questionId,
+                    ),
+                  )?.date,
+                ).format("DD/MM/YYYY"),
+              };
+            }),
         };
       });
 
