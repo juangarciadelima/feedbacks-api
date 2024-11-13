@@ -27,6 +27,7 @@
 		"@fastify/autoload": "^5.8.3",
 		"@grotto/logysia": "^0.1.4",
 		"@prisma/client": "5.14.0",
+		"dayjs": "^1.11.13",
 		"elysia": "^1.1.4",
 		"logestic": "^1.2.0",
 		"zod": "^3.23.8"

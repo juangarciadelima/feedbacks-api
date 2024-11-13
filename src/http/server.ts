@@ -20,6 +20,7 @@ import { authentication } from "./auth.ts";
 import { NotAAdminError } from "@/routes/errors/not-a-admin-error.ts";
 import { UserType } from "@prisma/client";
 import { registerUser } from "@/routes/register-user.ts";
+import { getGroupAnalysis } from "@/routes/get-group-analysis.ts";
 
 const port = process.env.PORT || 3333;
 
@@ -31,10 +32,10 @@ export const app = new Elysia({ prefix: "/api" })
           title: "Feedbacks API",
           description:
             "API to manage received and added feedbacks by users in the system",
-          version: "1.0.0"
-        }
-      }
-    })
+          version: "1.0.0",
+        },
+      },
+    }),
   )
   .use(
     cors({
@@ -90,6 +91,7 @@ export const app = new Elysia({ prefix: "/api" })
   .use(getAddedFeedbacks)
   .use(getReceivedFeedbacks)
   .use(registerUser)
+  .use(getGroupAnalysis)
   .onError(({ code, error, set }) => {
     switch (code) {
       case "VALIDATION": {
@@ -112,5 +114,5 @@ export const app = new Elysia({ prefix: "/api" })
 app.get("/", () => "Hello from Elysia 🦊");
 
 console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
 );
