@@ -29,6 +29,15 @@ export const getGroupAnalysis = new Elysia({
         "MM/DD/YYYY",
       );
 
+      const selectedGroupName = await prisma.questionsSet.findUnique({
+        where: {
+          id: selectedGroup,
+        },
+        select: {
+          questionSetName: true,
+        },
+      });
+
       const where: Prisma.FeedbacksWhereInput = {
         questionSetId: selectedGroup,
         date: {
@@ -193,6 +202,10 @@ export const getGroupAnalysis = new Elysia({
       const mergedGraphData = mergeData(graphData);
 
       return {
+        selectedGroup: {
+          id: selectedGroup,
+          name: selectedGroupName?.questionSetName,
+        },
         numberOfRealizedFeedbacks: feedbacksNumber.length,
         reviewedUsers: uniqueUsersReviewed,
         realizedObservations,
