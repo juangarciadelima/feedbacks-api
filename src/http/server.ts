@@ -21,6 +21,7 @@ import { NotAAdminError } from "@/routes/errors/not-a-admin-error.ts";
 import { UserType } from "@prisma/client";
 import { registerUser } from "@/routes/register-user.ts";
 import { getGroupAnalysis } from "@/routes/get-group-analysis.ts";
+import { getUserAnalysis } from "@/routes/get-user-analysis.ts";
 
 const port = process.env.PORT || 3333;
 
@@ -43,7 +44,7 @@ export const app = new Elysia({ prefix: "/api" })
       allowedHeaders: [
         "Content-Type",
         "Authorization",
-        "access-control-allow-methods"
+        "access-control-allow-methods",
       ],
       methods: ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"],
       origin: (request): boolean => {
@@ -54,8 +55,8 @@ export const app = new Elysia({ prefix: "/api" })
         }
 
         return true;
-      }
-    })
+      },
+    }),
   )
   .use(authentication)
   .state("user", {})
@@ -92,6 +93,7 @@ export const app = new Elysia({ prefix: "/api" })
   .use(getReceivedFeedbacks)
   .use(registerUser)
   .use(getGroupAnalysis)
+  .use(getUserAnalysis)
   .onError(({ code, error, set }) => {
     switch (code) {
       case "VALIDATION": {
