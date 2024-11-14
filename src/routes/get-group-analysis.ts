@@ -130,6 +130,7 @@ export const getGroupAnalysis = new Elysia({
                 questions.find((question) => question.id === questionId)
                   ?.questionName,
             )
+            .filter((question) => question.rating !== null)
             .map((question) => {
               return {
                 id: question.id,

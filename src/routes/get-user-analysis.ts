@@ -21,7 +21,7 @@ export const getUserAnalysis = new Elysia({
   .get(
     "/get-user-analysis",
     async ({ query }) => {
-      const { user, startDate, endDate } = query;
+      const { user, groupId, startDate, endDate } = query;
 
       const formattedEndDate = dayjs(
         convertToInternationalDate(endDate),
@@ -30,6 +30,7 @@ export const getUserAnalysis = new Elysia({
 
       const where: Prisma.FeedbacksWhereInput = {
         reviewed: user,
+        questionSetId: groupId,
         date: {
           gte: startDate
             ? dayjs(
@@ -119,6 +120,7 @@ export const getUserAnalysis = new Elysia({
                 questions.find((question) => question.id === questionId)
                   ?.questionName,
             )
+            .filter((question) => question.rating !== null)
             .map((question) => {
               return {
                 id: question.id,
@@ -228,6 +230,7 @@ export const getUserAnalysis = new Elysia({
     {
       query: t.Object({
         user: t.String(),
+        groupId: t.String(),
         startDate: t.Optional(t.String()),
         endDate: t.String(),
       }),
