@@ -22,24 +22,25 @@ export const getGroupAnalysis = new Elysia({
   .get(
     "/get-group-analysis",
     async ({ query }) => {
-      const { selectedGroup, startDate, endDate } = query;
+      const { groupId, startDate, endDate } = query;
 
       const formattedEndDate = dayjs(
         convertToInternationalDate(endDate),
         "MM/DD/YYYY",
       );
 
-      const selectedGroupName = await prisma.questionsSet.findUnique({
+      const selectedGroup = await prisma.questionsSet.findUnique({
         where: {
-          id: selectedGroup,
+          id: groupId,
         },
         select: {
           questionSetName: true,
+          numberOfStars: true,
         },
       });
 
       const where: Prisma.FeedbacksWhereInput = {
-        questionSetId: selectedGroup,
+        questionSetId: groupId,
         date: {
           gte: startDate
             ? dayjs(
@@ -203,8 +204,9 @@ export const getGroupAnalysis = new Elysia({
 
       return {
         selectedGroup: {
-          id: selectedGroup,
-          name: selectedGroupName?.questionSetName,
+          id: groupId,
+          name: selectedGroup?.questionSetName,
+          numberOfStars: selectedGroup?.numberOfStars,
         },
         numberOfRealizedFeedbacks: feedbacksNumber.length,
         reviewedUsers: uniqueUsersReviewed,
@@ -217,7 +219,7 @@ export const getGroupAnalysis = new Elysia({
     },
     {
       query: t.Object({
-        selectedGroup: t.String(),
+        groupId: t.String(),
         startDate: t.Optional(t.String()),
         endDate: t.String(),
       }),
